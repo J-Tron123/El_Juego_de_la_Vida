@@ -1,3 +1,5 @@
 ANCHO = 800
 ALTO = 800
 FPS = 60
+NXC = 100
+NYC = 100
