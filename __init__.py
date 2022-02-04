@@ -1,0 +1,3 @@
+ANCHO = 800
+ALTO = 800
+FPS = 60
