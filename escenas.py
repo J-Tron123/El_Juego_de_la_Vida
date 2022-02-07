@@ -1,4 +1,3 @@
-from turtle import width
 import pygame as pg
 from __init__ import *
 import numpy as np
@@ -7,7 +6,6 @@ import time
 class Escena():
     def __init__(self, pantalla):
         self.pantalla = pantalla
-        self.reloj = pg.time.Clock()
     
     def bucle_principal(self):
         pass
@@ -40,30 +38,55 @@ class Portada(Escena):
 class Partida(Escena):
     def __init__(self, pantalla):
         super().__init__(pantalla)
-        self.celula = np.zeros((NXC, NYC)) 
-        self.reloj = pg.time.Clock()
+        self.celula = np.zeros((NXC, NYC))
+        # Oscilador
+        self.celula[38, 20] = 1
+        self.celula[39, 20] = 1
+        self.celula[40, 20] = 1
+
+        # Serpiente
+        self.celula[30, 20] = 1
+        self.celula[31, 20] = 1
+        self.celula[32, 20] = 1
+        self.celula[32, 19] = 1
+        self.celula[33, 19] = 1
+        self.celula[34, 19] = 1
+        
+        # Corredor
+        self.celula[10, 5] = 1
+        self.celula[12, 5] = 1
+        self.celula[11, 6] = 1
+        self.celula[12, 6] = 1
+        self.celula[11, 7] = 1
+
+        # Alguna otra que quieras añadir a partir de aquí, debe ser parte del __init__
 
     def bucle_principal(self):
         pausa = False
+        celda_ancho = ANCHO / NXC
+        celda_alto = ALTO / NYC
         while True:
             self.nueva_celula = np.copy(self.celula)
             time.sleep(0.1)
-            posX = pg.mouse.get_pos()
-            posY = pg.mouse.get_pos()
-            celda_x = int(posX[0] / NXC)
-            celda_y = int(posY[1] / NYC)
+            self.pantalla.fill((30, 30, 30))
+
             for evento in pg.event.get():
                 if evento.type == pg.QUIT:
                     exit()
                 if evento.type == pg.KEYDOWN:
+                    if evento.key == pg.K_0:
+                        exit()
                     if evento.key == pg.K_SPACE:
-                        not pausa
-                if evento.type == pg.MOUSEBUTTONDOWN:
-                    if sum(pg.mouse.get_pressed()) > 0:
-                        self.nueva_celula[celda_x, celda_y] = 1
+                        pausa = not pausa
+                if sum(pg.mouse.get_pressed()) > 0:
+                    posX = pg.mouse.get_pos()
+                    posY = pg.mouse.get_pos()
+                    celda_x = int(posX[0] / celda_ancho)
+                    celda_y = int(posY[1] / celda_alto)
+                    self.nueva_celula[celda_x, celda_y] = 1
             
-            for x in range(0, NYC):
-                for y in range (0, NXC):
+            for y in range(0, NYC):
+                for x in range (0, NXC):
                     if not pausa:
                         vecinas =   self.celula[(x - 1) % NXC, (y - 1)  % NYC] + \
                                     self.celula[(x)     % NXC, (y - 1)  % NYC] + \
@@ -73,25 +96,22 @@ class Partida(Escena):
                                     self.celula[(x - 1) % NXC, (y + 1)  % NYC] + \
                                     self.celula[(x)     % NXC, (y + 1)  % NYC] + \
                                     self.celula[(x + 1) % NXC, (y + 1)  % NYC]
-            
-            poly = [((x)   * celda_x, y * celda_y),
-            ((x+1) * celda_x, y * celda_y),
-            ((x+1) * celda_x, (y+1) * celda_y),
-            ((x)   * celda_x, (y+1) * celda_y)]
 
-            if self.nueva_celula[x, y] == 0:
-                pg.draw.polygon(self.pantalla, (40, 40, 40), poly, 1)
-            else:
-                pg.draw.polygon(self.pantalla, (200, 100, 100), poly, 0)
+                        if self.celula[x, y] == 0 and vecinas == 3:
+                            self.nueva_celula[x, y] = 1
 
-            if self.celula[x, y] == 0 and vecinas == 3:
-                self.celula[x, y] = 1
+                        elif self.celula[x, y] == 1 and (vecinas < 2 or vecinas > 3):
+                            self.nueva_celula[x, y] = 0                    
+                        
+                    poly = [((x)   * celda_ancho, y * celda_alto),
+                    ((x+1) * celda_ancho, y * celda_alto),
+                    ((x+1) * celda_ancho, (y+1) * celda_alto),
+                    ((x)   * celda_ancho, (y+1) * celda_alto)]
 
-            if self.celula[x, y] == 1 and vecinas < 2:
-                self.celula[x, y] = 0
-            
-            if self.celula[x, y] == 1 and vecinas > 3:
-                self.celula[x, y] = 0
+                    if self.nueva_celula[x, y] == 0:
+                        pg.draw.polygon(self.pantalla, (40, 40, 40), poly, 1)
+                    else:
+                        pg.draw.polygon(self.pantalla, (200, 200, 200), poly, 0)
 
             self.celula = np.copy(self.nueva_celula)
             pg.display.set_caption("El Juego de la Vida")
