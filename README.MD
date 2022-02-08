@@ -14,6 +14,6 @@ Las reglas del juego son las siguientes:
 
 Puedes usar el click para dar via a una célula, usar la barra espacio para pausar el juego y la tecla del número 0 para cerrar la ventana.
 
-Si quieres añadir más entidades o modificar alguna al inicio solo debes hacerlo en el ```__init__``` del fichero escenas.py.
+Si quieres añadir más entidades o modificar alguna al inicio solo debes hacerlo en la clase ```Celula``` del fichero entidades.py.
 
 Espero que lo disfrutes!
