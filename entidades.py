@@ -9,22 +9,22 @@ class Tablero():
     def vecinas(self, x, y, celula):
         super().__init__()
         vecinas =   celula[(x - 1) % NXC, (y - 1)  % NYC] + \
-                                    celula[(x)     % NXC, (y - 1)  % NYC] + \
-                                    celula[(x + 1) % NXC, (y - 1)  % NYC] + \
-                                    celula[(x - 1) % NXC, (y)      % NYC] + \
-                                    celula[(x + 1) % NXC, (y)      % NYC] + \
-                                    celula[(x - 1) % NXC, (y + 1)  % NYC] + \
-                                    celula[(x)     % NXC, (y + 1)  % NYC] + \
-                                    celula[(x + 1) % NXC, (y + 1)  % NYC]
+                    celula[(x)     % NXC, (y - 1)  % NYC] + \
+                    celula[(x + 1) % NXC, (y - 1)  % NYC] + \
+                    celula[(x - 1) % NXC, (y)      % NYC] + \
+                    celula[(x + 1) % NXC, (y)      % NYC] + \
+                    celula[(x - 1) % NXC, (y + 1)  % NYC] + \
+                    celula[(x)     % NXC, (y + 1)  % NYC] + \
+                    celula[(x + 1) % NXC, (y + 1)  % NYC]
         return vecinas
 
     def casillas(self, x, y):
         super().__init__()
-        poly = [((x)   * self.celda_ancho, y * self.celda_alto),
-                    ((x+1) * self.celda_ancho, y * self.celda_alto),
-                    ((x+1) * self.celda_ancho, (y+1) * self.celda_alto),
-                    ((x)   * self.celda_ancho, (y+1) * self.celda_alto)]
-        return poly
+        casillas = [((x)   * self.celda_ancho, y * self.celda_alto),
+                ((x+1) * self.celda_ancho, y * self.celda_alto),
+                ((x+1) * self.celda_ancho, (y+1) * self.celda_alto),
+                ((x)   * self.celda_ancho, (y+1) * self.celda_alto)]
+        return casillas
 
 class Celulas(Tablero):
     def comportamineto(self, x, y, vecinas, celula, nueva_celula):

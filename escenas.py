@@ -45,38 +45,39 @@ class Partida(Escena):
         self.serpiente = Celulas().serpiente(self.celula)
         self.corredor = Celulas().corredor(self.celula)
 
+    def acciones(self, evento, pausa, celda_ancho, celda_alto):
+        if evento.type == pg.QUIT:
+            exit()
+        if evento.type == pg.KEYDOWN:
+            if evento.key == pg.K_0:
+                exit()
+            if evento.key == pg.K_SPACE:
+                pausa = not pausa
+        if sum(pg.mouse.get_pressed()) > 0:
+            posX = pg.mouse.get_pos()
+            posY = pg.mouse.get_pos()
+            celda_x = int(posX[0] / celda_ancho)
+            celda_y = int(posY[1] / celda_alto)
+            self.nueva_celula[celda_x, celda_y] = 1
+
     def bucle_principal(self):
         pausa = False
         celda_ancho = ANCHO / NXC
         celda_alto = ALTO / NYC
-        self.oscilador
         while True:
             self.nueva_celula = np.copy(self.celula)
             time.sleep(0.1)
             self.pantalla.fill((30, 30, 30))
 
             for evento in pg.event.get():
-                if evento.type == pg.QUIT:
-                    exit()
-                if evento.type == pg.KEYDOWN:
-                    if evento.key == pg.K_0:
-                        exit()
-                    if evento.key == pg.K_SPACE:
-                        pausa = not pausa
-                if sum(pg.mouse.get_pressed()) > 0:
-                    posX = pg.mouse.get_pos()
-                    posY = pg.mouse.get_pos()
-                    celda_x = int(posX[0] / celda_ancho)
-                    celda_y = int(posY[1] / celda_alto)
-                    self.nueva_celula[celda_x, celda_y] = 1
+                self.acciones(evento, pausa, celda_ancho, celda_alto)
             
             for y in range(0, NYC):
                 for x in range (0, NXC):
                     if not pausa:
                         vecinas = self.tablero.vecinas(x, y, self.celula)
-
-                    comportamiento = Celulas().comportamineto(x, y, vecinas, self.celula, self.nueva_celula)
                         
+                    Celulas().comportamineto(x, y, vecinas, self.celula, self.nueva_celula)                        
                     casillas = self.tablero.casillas(x, y)
 
                     if self.nueva_celula[x, y] == 0:
@@ -87,4 +88,3 @@ class Partida(Escena):
             self.celula = np.copy(self.nueva_celula)
             pg.display.set_caption("El Juego de la Vida")
             pg.display.flip()
-
