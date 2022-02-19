@@ -1,10 +1,7 @@
 # El juego de la vida
 Hola! Esta es mi versión del juego de la vida de John Horton Conway, para poder jugar a él es muy sencillo y solo debes serguir estos pasos:
-
->1. Crear un entorno virtual introduciendo el siguiente comando en la terminal ```python -m venv venv```
->2. Abrir el entorno virtual con los siguientes comandos: para Windows ```venv\Scripts\activate``` o para MAC ```venv\bin\activate```
->3. Introducir el siguiente comando en la terminal: pip install requirements.txt
->4. Luego de haber preparado tu equipo, ejecuta el script main.py y comienza a jugar
+>1. Introducir el siguiente comando en la terminal: pip install requirements.txt
+>2. 
 
 ### Reglas
 Las reglas del juego son las siguientes:
