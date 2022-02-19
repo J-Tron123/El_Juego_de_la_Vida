@@ -1,7 +1,7 @@
 # El juego de la vida
 Hola! Esta es mi versión del juego de la vida de John Horton Conway, para poder jugar a él es muy sencillo y solo debes serguir estos pasos:
 >1. Introducir el siguiente comando en la terminal: pip install requirements.txt
->2. 
+>2. Ejecutar el archivo ´´´main.py´´´
 
 ### Reglas
 Las reglas del juego son las siguientes:
