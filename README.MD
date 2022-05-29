@@ -3,6 +3,10 @@ Hola! Esta es mi versión del juego de la vida de John Horton Conway, para poder
 >1. Introducir el siguiente comando en la terminal: pip install requirements.txt
 >2. Ejecutar el archivo ```main.py```
 
+
+![Image](resources/images/portada.png)
+
+
 ### Reglas
 Las reglas del juego son las siguientes:
 - Si una célula está viva y tiene dos o tres vecinas vivas, sobrevive. 
